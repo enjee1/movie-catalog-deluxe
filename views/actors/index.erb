@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Actors</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <h1>Actors</h1>
+    <div >
+      <ul>
+        <% @actors_array.each do |actor| %>
+        <li>
+          <a href="actors/<%= "#{actor["id"]}" %>"><%= "#{actor["name"]}" %></a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </body>
+</html>
