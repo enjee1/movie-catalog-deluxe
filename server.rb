@@ -1,6 +1,6 @@
 require "sinatra"
 require "pg"
-require "pry"
+
 
 set :bind, '0.0.0.0'  # bind to all interfaces
 
@@ -68,10 +68,27 @@ end
 
 get "/movies/:id" do
   movie_id = params["id"]
-
+  @movie_details = []
   db_connection do |conn|
     sql = "
-    SELECT
+    SELECT movies.title AS movie_title, movies.year AS release_year,
+    movies.rating AS rating, genres.name AS genre, studios.name AS studio_name, actors.name AS actor_name,
+    actors.id AS actor_id, cast_members.character AS character_name
+    FROM movies
+    JOIN genres ON movies.genre_id = genres.id
+    JOIN cast_members ON movies.id = cast_members.movie_id
+    JOIN actors ON cast_members.actor_id = actors.id
+    FULL JOIN studios on movies.studio_id = studios.id
+    WHERE movies.id = ($1)
     "
+    @movie_details = conn.exec_params(sql, [movie_id]).to_a
   end
+
+  @cast_members = []
+  @movie_details.each do |entry|
+    @cast_members << { :id => entry["actor_id"], :name => entry["actor_name"],
+      :character => entry["character_name"] }
+  end
+
+  erb :"movies/show"
 end

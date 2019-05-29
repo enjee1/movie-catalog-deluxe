@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Movie Details</title>
+    <link rel="stylesheet" type="css" href="styles.css">
+  </head>
+  <body>
+    <h1><%= @movie_details[0]["movie_title"] %></h1>
+
+    <ul>
+      <li>Genre: <%= @movie_details[0]["genre"] %> </li>
+      <li>Rating (out of 100): <%= @movie_details[0]["rating"] %></li>
+      <li>Studio Name: <%= @movie_details[0]["studio_name"] %> </li>
+      <li>Year Released: <%= @movie_details[0]["release_year"] %></li>
+      <li>Cast: </li>
+      <ul>
+        <% @cast_members.each do |person| %>
+          <li><a href="/actors/<%= "#{person[:id]}" %>"><%= "#{person[:name]}"%> </a> as <%= "#{person[:character]}" %></li>
+        <% end %>
+      </ul>
+    </ul>
+  </body>
+</html>
