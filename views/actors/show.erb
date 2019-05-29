@@ -6,9 +6,16 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <!-- <h1>Actor Name Goes Here </h1> -->
+    <h1><%= "#{@actor_profile[0]["name"]}" %></h1>
     <div >
-      
+      <ul>
+        <% @actor_profile.each do |movie| %>
+          <li>Movie Title: <a href="/movies/<%= "#{movie["id"]}" %>"><%= "#{movie["title"]}" %></a></li>
+          <ul>
+            <li>Character Played: <%= movie["character"] %> </li><br>
+          </ul>
+        <% end %>
+      </ul>
     </div>
   </body>
 </html>
